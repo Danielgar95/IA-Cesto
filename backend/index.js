@@ -9,13 +9,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+// Ruta raíz para probar si el backend funciona
+app.get('/', (req, res) => {
+  res.send('Backend IA Cesto funcionando correctamente.');
 });
 
+// Ruta POST para generar ejercicios con IA
 app.post('/generar-ejercicio', async (req, res) => {
   try {
     const { prompt } = req.body;
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
@@ -30,7 +36,7 @@ app.post('/generar-ejercicio', async (req, res) => {
   }
 });
 
-// 👇 Esto es lo que Render necesita para detectar el puerto
+// Arranca el servidor en el puerto 3000
 app.listen(3000, () => {
   console.log('Servidor escuchando en el puerto 3000');
 });
