@@ -1,1 +1,3 @@
-// Backend de IA Cesto
+app.listen(3000, () => {
+  console.log('Servidor escuchando en el puerto 3000');
+});
